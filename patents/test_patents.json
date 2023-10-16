@@ -1,0 +1,369 @@
+{
+    "patents": [
+{
+    "patent_id": "8341762",
+    "patent_title": "Safety vest assembly including a high reliability communication system",
+    "patent_date": "2013-01-01",
+    "patent_abstract": "There is provided a safety vest assembly including a vest having a vest outer layer defining a vest inner cavity. A pair of contact substrates is disposed within the vest inner cavity. Each contact substrate includes an input connection element. A data input is connected to a respective contact substrate. The data input is electrically connected to the respective input connection element and is configured to receive data from the wearer. A data output is connected to a respective contact substrates and is communicable with a remote transceiver. The data output is electrically connected to the respective input connection element and is configured to communicate data to the remote transceiver. An input flex circuit is engageable with the pair of input connection elements to facilitate communication between the data input and data output along the input flex circuit.",
+    "application": [
+        {
+            "application_id": "12/077841"
+        }
+    ],
+    "cpc_current": [
+        {
+            "cpc_sequence": 0,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/F41/",
+            "cpc_class_id": "F41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/F41H/",
+            "cpc_subclass_id": "F41H",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/F41H1:02/",
+            "cpc_group_id": "F41H1/02"
+        },
+        {
+            "cpc_sequence": 1,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D1:005/",
+            "cpc_group_id": "A41D1/005"
+        },
+        {
+            "cpc_sequence": 2,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D31:245/",
+            "cpc_group_id": "A41D31/245"
+        }
+    ],
+    "inventors": [
+        {
+            "inventor_name_first": "Alfiero",
+            "inventor_name_last": "Balzano",
+            "inventor_city": "Garden Grove",
+            "inventor_state": "CA",
+            "inventor_country": "US"
+        }
+    ]
+},
+{
+    "patent_id": "8341763",
+    "patent_title": "Reinforcing element",
+    "patent_date": "2013-01-01",
+    "patent_abstract": "The invention relates to a reinforcing element for an article of clothing, in particular for a goalkeeper glove, that allows a bending in a first direction, but resists bending in a second direction. The reinforcing element includes at least one bending area that has a curvature with a shape that allows bending of the reinforcing element in the first direction and blocks a bending of the reinforcing element in the second direction.",
+    "application": [
+        {
+            "application_id": "11/657400"
+        }
+    ],
+    "assignees": [
+        {
+            "assignee_individual_name_first": null,
+            "assignee_individual_name_last": null,
+            "assignee_organization": "adidas International Marketing B.V."
+        }
+    ],
+    "cpc_current": [
+        {
+            "cpc_sequence": 0,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D19:01588/",
+            "cpc_group_id": "A41D19/01588"
+        },
+        {
+            "cpc_sequence": 1,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B71:148/",
+            "cpc_group_id": "A63B71/148"
+        },
+        {
+            "cpc_sequence": 2,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B2243:0025/",
+            "cpc_group_id": "A63B2243/0025"
+        }
+    ],
+    "foreign_priority": [
+        {
+            "filing_date": "2005-03-30"
+        },
+        {
+            "filing_date": "2006-09-29"
+        }
+    ],
+    "inventors": [
+        {
+            "inventor_name_first": "Dirk",
+            "inventor_name_last": "Meythaler",
+            "inventor_city": "Nuremberg",
+            "inventor_state": null,
+            "inventor_country": "DE"
+        },
+        {
+            "inventor_name_first": "Erwin Friedrich",
+            "inventor_name_last": "Saur",
+            "inventor_city": "Schwabach",
+            "inventor_state": null,
+            "inventor_country": "DE"
+        },
+        {
+            "inventor_name_first": "Detlef",
+            "inventor_name_last": "Mueller",
+            "inventor_city": "Zwingenberg",
+            "inventor_state": null,
+            "inventor_country": "DE"
+        },
+        {
+            "inventor_name_first": "Harald",
+            "inventor_name_last": "Geyer",
+            "inventor_city": "Lonnerstadt",
+            "inventor_state": null,
+            "inventor_country": "DE"
+        },
+        {
+            "inventor_name_first": "Volker Peter",
+            "inventor_name_last": "Steidle",
+            "inventor_city": "Nuremberg",
+            "inventor_state": null,
+            "inventor_country": "DE"
+        }
+    ]
+},
+{
+    "patent_id": "8341764",
+    "patent_title": "Calf protector for rowers",
+    "patent_date": "2013-01-01",
+    "patent_abstract": "A calf protector for rowers, comprising a single strip of neoprene (or a similar synthetic or natural rubber) covered by nylon (or other fabric having loops) with a strip of hook fasteners (as in VELCRO\u00ae) on one end. The neoprene strip is wider in the main middle part, and narrower at the ends. Hook fasteners on the inside surface at one end of the strip can engage loops in the fabric on the outside surface at the opposite end of the strip (or visa versa) so that it forms a loop around the rower's leg, to protect the back of the leg from friction against the front ends of rails on which the seats in a boat move when rowing. The invention may also be used by other persons to protect their legs and/or arms. The invention encompasses both an apparatus and a method for protecting limbs using the apparatus.",
+    "application": [
+        {
+            "application_id": "12/781786"
+        }
+    ],
+    "cpc_current": [
+        {
+            "cpc_sequence": 0,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B71:1225/",
+            "cpc_group_id": "A63B71/1225"
+        },
+        {
+            "cpc_sequence": 1,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D13:0543/",
+            "cpc_group_id": "A41D13/0543"
+        },
+        {
+            "cpc_sequence": 2,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B69:06/",
+            "cpc_group_id": "A63B69/06"
+        },
+        {
+            "cpc_sequence": 3,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B2071:1266/",
+            "cpc_group_id": "A63B2071/1266"
+        },
+        {
+            "cpc_sequence": 4,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B2209:10/",
+            "cpc_group_id": "A63B2209/10"
+        }
+    ],
+    "inventors": [
+        {
+            "inventor_name_first": "Alfred Wendell",
+            "inventor_name_last": "Wilson",
+            "inventor_city": "Manassas",
+            "inventor_state": "VA",
+            "inventor_country": "US"
+        }
+    ]
+},
+{
+    "patent_id": "8341765",
+    "patent_title": "Garment for training swimmers",
+    "patent_date": "2013-01-01",
+    "patent_abstract": "A training garment is provided for use by a swimmer. The garment includes a layer of material that is configured to conform to a body portion of the swimmer, and a plurality of pockets that extend from the layer of material for increasing drag on the swimmer as the body portion is moved in a preselected direction of movement. At least one of the pockets has first and second conditions. In the first condition, drag is increased by that pocket on the swimmer as the body portion moves in the preselected direction of movement. In the second condition, drag is not increased by that pocket on the swimmer as the body portion moves in the preselected direction of movement.",
+    "application": [
+        {
+            "application_id": "12/609340"
+        }
+    ],
+    "cpc_current": [
+        {
+            "cpc_sequence": 0,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D7:00/",
+            "cpc_group_id": "A41D7/00"
+        },
+        {
+            "cpc_sequence": 1,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D13:0012/",
+            "cpc_group_id": "A41D13/0012"
+        },
+        {
+            "cpc_sequence": 2,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B21:0602/",
+            "cpc_group_id": "A63B21/0602"
+        },
+        {
+            "cpc_sequence": 3,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B2208:03/",
+            "cpc_group_id": "A63B2208/03"
+        },
+        {
+            "cpc_sequence": 4,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B2225:09/",
+            "cpc_group_id": "A63B2225/09"
+        },
+        {
+            "cpc_sequence": 5,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B2225:60/",
+            "cpc_group_id": "A63B2225/60"
+        },
+        {
+            "cpc_sequence": 6,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A63/",
+            "cpc_class_id": "A63",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A63B/",
+            "cpc_subclass_id": "A63B",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A63B2244:20/",
+            "cpc_group_id": "A63B2244/20"
+        }
+    ],
+    "inventors": [
+        {
+            "inventor_name_first": "Ralph R.",
+            "inventor_name_last": "Brodbeck",
+            "inventor_city": "Cincinnati",
+            "inventor_state": "OH",
+            "inventor_country": "US"
+        }
+    ]
+},
+{
+    "patent_id": "8341766",
+    "patent_title": "Jacket",
+    "patent_date": "2013-01-01",
+    "patent_abstract": "A jacket has several features useful for participating in a sport while wearing the jacket. The jacket may have a shell with a pocket in an upper region of the shell and a semi-rigid collar located in the pocket, wherein the semi-rigid collar is movable between a storage position wherein the semi-rigid collar is in the pocket and a use position wherein the semi-rigid collar is partially removed from the pocket. The jacket may also have a shoulder region with discrete areas of gripping material located on the shoulder region. The jacket may also have an inner core wrap having a perimeter, wherein a portion of the perimeter is removably attached to the outer shell that hugs the torso of a wearer. The jacket may also have a sleeve and a gusset formed on an outer surface of the sleeve by folding material forming the sleeve at an inner angle of the wearer's elbow, wherein the gusset unfolds and the sleeve lengthens when the arm of a wearer is straightened and wherein the gusset refolds and the sleeve shortens when the arm of the wear is bent.",
+    "application": [
+        {
+            "application_id": "12/099614"
+        }
+    ],
+    "assignees": [
+        {
+            "assignee_individual_name_first": null,
+            "assignee_individual_name_last": null,
+            "assignee_organization": "Taylor Made Golf Company, Inc."
+        }
+    ],
+    "cpc_current": [
+        {
+            "cpc_sequence": 0,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D3:00/",
+            "cpc_group_id": "A41D3/00"
+        },
+        {
+            "cpc_sequence": 1,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D13:0512/",
+            "cpc_group_id": "A41D13/0512"
+        },
+        {
+            "cpc_sequence": 2,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D27:10/",
+            "cpc_group_id": "A41D27/10"
+        },
+        {
+            "cpc_sequence": 3,
+            "cpc_class": "https://search.patentsview.org/api/v1/cpc_class/A41/",
+            "cpc_class_id": "A41",
+            "cpc_subclass": "https://search.patentsview.org/api/v1/cpc_subclass/A41D/",
+            "cpc_subclass_id": "A41D",
+            "cpc_group": "https://search.patentsview.org/api/v1/cpc_group/A41D27:18/",
+            "cpc_group_id": "A41D27/18"
+        }
+    ],
+    "inventors": [
+        {
+            "inventor_name_first": "Patricia Elizabeth",
+            "inventor_name_last": "Dahan",
+            "inventor_city": "Temecula",
+            "inventor_state": "CA",
+            "inventor_country": "US"
+        },
+        {
+            "inventor_name_first": "Amanda",
+            "inventor_name_last": "Rodriguez",
+            "inventor_city": "Carlsbad",
+            "inventor_state": "CA",
+            "inventor_country": "US"
+        }
+    ]
+}
+]
+}
