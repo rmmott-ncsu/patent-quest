@@ -1,0 +1,230 @@
+\documentclass{article}
+
+
+% if you need to pass options to natbib, use, e.g.:
+%     \PassOptionsToPackage{numbers, compress}{natbib}
+% before loading neurips_2023
+
+
+% ready for submission
+\usepackage[final]{neurips_2023}
+
+
+% to compile a preprint version, e.g., for submission to arXiv, add add the
+% [preprint] option:
+%     \usepackage[preprint]{neurips_2023}
+
+
+% to compile a camera-ready version, add the [final] option, e.g.:
+%     \usepackage[final]{neurips_2023}
+
+
+% to avoid loading the natbib package, add option nonatbib:
+%    \usepackage[nonatbib]{neurips_2023}
+
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{xcolor}         % colors
+
+
+\usepackage{graphicx}   % added for image importing
+\usepackage{float}
+\graphicspath{ {./images/} }
+
+
+
+
+
+\title{Patent Quest: An Unsupervised Learning Algorithm that Returns the Most Common Words Found in Recently Filed Patents and Abstracts}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+
+\author{%
+  Ben Rogers\\
+  Department of Computer Science\\
+  North Carolina State University\\
+  Raleigh, NC 27695 \\
+  \texttt{bsrodgers@ncsu.edu} \\
+  \And
+  Ryan Mott \\
+  Department of Computer Science \\
+  North Carolina State University \\
+  Bronxville, NY 10708 \\
+  \texttt{rmmott@ncsu.edu} \\
+  \And
+  Ralph Keyser \\
+  Department of Computer Science \\
+  North Carolina State University \\
+  Raleigh, NC 27695 \\
+  \texttt{rkeyser@ncsu.edu} \\
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+ The United States Patent and Trademark Office (“USPTO”) maintains the records of millions of issued patents in an online database and categorizes each patent by a number of attributes, including inventor; location; applicant; and technological class.   The exact nature of what each of these patents claims and describes is often a hotly contested legal issue, which requires, among other things, the testimony of expert witnesses; the advocacy of patent attorneys; and the holding of a federal judge.  But there are many cases in which the exact meaning of one patent is not needed so much as the general subject matter of many patents.  For example, a business may want to be apprised of the general R\&D efforts of its competitor; or data scientists may want to investigate general invention trends of a geographic region.  Thus, we have devised a method of finding, in response to a given query, the most common keywords used in the abstracts of each patent, and generating a WordCloud-style visualization that can be used to quickly surmise the general subject matter of a group of patents.  Accuracy tests, in which the visualization will be compared to an actual opinion of a patent lawyer as to a group of patents’ most significant terms, will also be conducted.
+\end{abstract}
+
+\section{Background \& Introduction}
+\label{background}
+
+From the Singer sewing machine (see U.S. Patent No. 8,294) to the Edison lightbulb (see U.S. Patent No. 223,898) to the Wright Brothers’ aircraft (see U.S. Patent No. 821,393) , much of American history can be told through the stories of invention and innovation that propelled it forward into new eras.  A window into these stories exists through the U.S. patent system, which publishes these inventions, and the best way of making and using them, in documents called “patents.”  
+
+The United States Patent and Trademark Office (“USPTO”) is in charge of issuing these patents and making them accessible to the public, which it has done perpetually since its inception in 1790.  As of 2023, there are now nearly 13 million patents that have been published through the U.S. patent system, which remain freely accessible by all. 
+
+The patents themselves are written by the inventor (and usually, a patent attorney), and include, among other things, a title, an abstract, a brief description of the invention and a set of patent claims.  Patents are notoriously complex, and the exact nature of what they describe and claim is often subject to intense disagreement, leading to multi-year legal battles that can cost millions of dollars in legal fees.
+
+But often, the exact nature of what a patent describes may be unimportant compared to the general subject matter that the patent represents.  For example, a business may want to surveil the general progression of its competitor’s research and development efforts, in order to ensure that it is pursuing similar research goals and market developments.  Or perhaps, the business may want to see if the competitor is venturing  into its own patents research efforts - and possibly infringing on patents of its own.  As another example, a data scientist may want to collect information on general R\&D trends in a given industry or region, and thus would care more about aggregated information about many patents than the exact meaning of a single patent.
+
+Thus, there exists a need to quickly and accurately compile information about the general subject matter of publicly available patents and patent applications.  Accordingly, this project seeks to use unsupervised learning methods for the purpose of gleaning information about the subject matter of not one, but many patents, by analyzing the text found in a patent’s title and abstract and producing a visualization of the most common keywords found therein.  The goal of the project would be to allow a user to perform a basic search – by competitor, inventor, geographic region or technological class  – within a specified date range, and then produce a word cloud visualization, like the one in \autoref{fig:word_cloud}, showing the most common keywords used in the patents that are included in the search.
+
+\begin{figure}[H]
+\includegraphics[width=5cm, height=4cm]{word_cloud}
+\centering
+\caption{Example WordCloud\protect\cite{website:wc_image}}
+\label{fig:word_cloud}
+\end{figure}
+
+\section{Method}
+\label{method}
+
+\subsection{Locate the Available Data Set}
+
+Although full text patents are available directly as bulk downloads from the United States Patent and Trademark Office, the sheer volume of the data – which includes every word written in every patent issued since 2002 – made it cumbersome to use.  Each week, around 7,000 U.S. patents are issued, which translates to hundreds of thousands of pages of dual-column text.  Since our project is focused primarily on a small subset of this text (the abstract and the title), collecting the data in bulk form would have been unwieldy and enormously inefficient.
+
+Fortunately, data from patents (since 1976) and patent applications (since 2001) are also available as part of a mySQL relational database hosted at PatentsView.org.  Using the available API query tools, we were able to pull only abstract and title data, as well as other identifying information, using a fraction of the space and bandwidth that would have been required from a bulk download.  Thus, using this approach, we were able to obtain a dataset that contained the previous ten years of patent titles and abstracts - from 2013 to 2023 - and store that data in a manageable file size on our team’s local machines and Google Drive.  A representative sample of this data appears at \url{https://github.ncsu.edu/rmmott/-engr-ALDA-Fall2023-P4}.
+
+\subsection{Parse the Data and Storing It for Processing}
+Data from the PatentsView mySQL database was collected using an API (PatentViewAPI.py), which pulled the fields shown in \autoref{tab:api_table}.
+
+\begin{table}
+  \centering
+  \begin{tabular}{l | p {25mm} | p{80mm}}
+    \toprule
+    \cmidrule(r){1-2}
+    \textbf{Field}            & \textbf{Sub-fields}				                                                                                                        & \textbf{Description}	\\
+    \midrule
+    Applicants               & First Name\newline Last Name\newline Organization 										   & Provides information about the entity of record that applied for the patent. \\
+    \hline
+    Application              & ID\newline Filing Date  															   & Provides information about the date the patent application was filed; and information about its unique, nominal application ID.\\
+     \hline
+    Assignees               & First Name\newline Last Name\newline Organization 										   & Provides information about the entity, if any, that has been assigned the legal rights of ownership of the patent.\\
+     \hline
+    CPC (Current)        & CPC Class\newline CPC Subclass\newline CPC Group									   & Patents are categorized by their technological class according to the Cooperative Patent Classification (“CPC”) scheme, a collection of 70,000+ classifiers that classify everything from “manure loaders” (A01C 3/04) to “thin magnetic films, e.g. of one-domain structure, characterized by the coupling or physical contact with connecting or interacting conductors” (H01F 10/06).  In order of increasing specificity, the CPC classifiers are class, subclass and group, respectively\protect\cite{website:uspto}.\\
+     \hline
+    Inventor                  &  Inventor City\newline Inventor State\newline Inventor Country\newline First Name\newline Last Name    & Provides information describing the identity and location of the inventor(s) of the patent.\\
+     \hline
+    Patent Abstract      & n.a.																			   & Paragraph describing, in high-level terms, the problem the inventor sought to overcome and how he did so through the patented invention.\\
+     \hline
+    Patent Date           & n.a. 																			   & Date that the patent was granted.\\
+     \hline
+    Patent ID               & n.a.																			   & Unique, nominal identified assigned to each patent at time of grant.\\
+     \hline
+    Patent Title            & n.a 																			   & Short, one-line descriptor of the patent provided by the inventor.\\
+    \bottomrule
+  \end{tabular}
+ \caption{API response fields}
+ \label{tab:api_table}
+\end{table}
+    
+Collecting these fields enables the ability to search patents filed by an applicant organization or person; or an inventor; or an entity that was assigned rights to the patent (assignee); or from a given inventor’s city/state/country; within a given date; or within a given CPC technological class; and within that it will let us assign each patent a nominal, unique identifier (patent ID or application ID)
+and it will let us search the words (abstract and title) for the purposes of creating a visualization or other analysis.
+
+Although the data was retrieved as expected and appeared to be organized consistent with its accompanying technical documentation, there were some unexpected difficulties associated with collecting and parsing the data that required some novel approaches to concatenation.  One example of an unexpected difficulty is shown below, with respect to U.S. Patent No. 8,341,769.  Like many patents, U.S. Patent No. 8,341,769 has more than one inventor, but instead of listing all of the inventors as part of an “Inventor” attribute for a single patent entry, the database simply repeats the entry for each patent, with each entry corresponding to a different inventor.  Thus, as shown in \autoref{fig:pre_df}, U.S. Patent No. 8,341,769 is duplicated at least five times across five different rows, with each row corresponding to a different inventor:  
+
+Duplicate patent entries, like those above, need to be managed for the purpose of our project.  If they remain in the dataset without being culled, it would have the effect of duplicating abstract fields, which would have the effect of weighing more heavily the text from those patents with repeated entries.  To solve this issue, we “flattened” the dataset and compressed each attribute into a single, patent-specific row, like the DataFrame shown in \autoref{fig:post_df}.
+
+\begin{figure}[H]
+\includegraphics[width=12cm, height=4cm]{pre_df}
+\centering
+\caption{DataFrame with repeated entries}
+\label{fig:pre_df}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics[width=14cm, height=5cm]{post_df}
+\centering
+\caption{Flattened DataFrame}
+\label{fig:post_df}
+\end{figure}
+
+Each patent now has a single row, with a single abstract, corresponding to all of its accompanying attributes, including its inventors, organizations and countries of origin.
+
+\subsection{Establish Means of Searching Parsed Data According to Business/Inventor/Class/Region and Date and Returning Words in Title and Abstract}
+
+At this stage of the project, we have not fully developed the algorithm that will return a DataFrame comprising the abstracts and titles of patents responsive to a given set of inputs.  Ultimately, the goal of this code will be to return a body of text that will be treated as a “bag of words” from the responsive patents from which we can perform further analysis.  
+
+\subsection{Establish Algorithm for Locating 100 Most Common Words in the Titles and Abstracts}
+
+Many techniques exist for locating the 100 most common words in the dataset\cite{website:Mast}. In general, these techniques require a process of cleaning the text, by, among other things,  (a) changing all letters to lowercase; (b) removing punctuation; and (3) eliminating noise, or “stop” words, which are English words that are well-known to be of little probative value in data analysis.
+
+One popular dictionary of stop words is the set of NLTK stop words, which includes prepositions such as “in,” “from,” or “on”; pronouns such as “you” and “I”, and commonly used verbs such as “could” or “should.”  In addition, there are several commonly used words in patents – such as “invention,” “claimed,” “present,” “method,” “product,” or “describe” – will similarly be of little probative value for our particular use case.  As we test the code, we intend to use the NLTK stop words and add patent-specific noise words to the dictionary until we are satisfied that we are returning a meaningful set of words.  
+
+\subsection{Return Visualization of Most Common Words}
+
+Once we obtain a set of the 100 most common words in the titles and abstracts that are responses to the user request, we intend to use a WordCloud visualization tool to return these responses, in graphic form, to the user.  
+
+One example of a WordCloud tool is the one written by Andres Mueller in 2012\cite{website:gh_tool}.  The WordCloud tool will enable presenting the information in various shapes, colors and sizes.  For example, it could return something neutral, such as a rectangle or circle, or something commonly associated with inventions, such as the lightbulb.  
+
+\section{Experiment Setup}
+\label{experiment_setup}
+
+\subsection{Experiment 1: Functionality Testing}
+
+\textbf{Searches by Business, Inventor, and Geography.}
+
+Once we create a program that can complete the tasks above, we intend to conduct two experiments - functionality testing, wherein we test to ensure that the program performs as intended; and accuracy testing, where we compare the programs output to the claims of a small number of individual patents responsive to the same set of inputs and date ranges.
+
+\subsection{Experiment 2: Accuracy Test}
+
+\textbf{Compare Visualized Words to Claims of Actual Patents}
+
+In this experiment, the 100 most common words returned in the algorithm will be compared to the words found in the actual claims of a random selection of that company’s patents that were issued in the same time period.  For example, if the algorithm is used to return the most common words in the abstracts of Microsoft’s patents from January to March of 2017, then this experiment will take a random subset of those patents and compare the most common words to the text of the actual patent claims. 
+
+\textbf{Reverse – Analyze Patent for “Important Words” and Compare to Visualization}
+
+In this experiment, we randomly pull a set of 10 patents from a single company within a given company, and have a patent attorney identify the 10 most important words used in those patents.  They will then be compared to a WordCloud visualization generated using the code from the same time period.  For example, if ten patents are chosen from the patents that issued to IBM between April and August of 2019, the patent attorney will first analyze the patents for the most important terms; and following that analysis, the terms will be compared to the results of our project’s code and visualization. 
+
+\section{Results}
+\label{results}
+
+Based on our progress so far, we are optimistic that the program will function to create the visualizations described above.  The results of the accuracy testing are currently unknown, and depending on the results, we may propose strategies to improve it.
+
+\section{Conclusion}
+\label{conclusion}
+
+In summary, we hope to create a searchable database of the words used in published patent abstracts and titles; devise an algorithm to search for the most common words used in a subset of this database; and create a program that returns a useful visualization that highlights these words in common.  Using this code, we will run some experiments to show proof-of-concept and provide some measure of accuracy.
+
+\bibliographystyle{plain} 
+\bibliography{p4} 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}
