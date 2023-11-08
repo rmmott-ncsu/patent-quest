@@ -94,7 +94,7 @@ def create_asymmetric_word_df(path: str):
                     except KeyError:
                         pass
 
-                # Check if plural version is already in diction & replace it with singular version
+                # Check if plural version is already in dictionary & replace it with singular version
                 elif lem_token[-1] != 's' and lem_token[-1] != 'd':
                     try:
                         removed_token_val = patent_tokenized_dict.pop(lem_token + 's')
@@ -110,10 +110,20 @@ def create_asymmetric_word_df(path: str):
                         removed_token_val = patent_tokenized_dict.pop(lem_token + 'd')
                         patent_tokenized_dict[lem_token] = removed_token_val + 1
                         plural_flag = True
-                        print(lem_token + 's', '->', lem_token, 'removed token:', removed_token_val, ", new token:", patent_tokenized_dict[lem_token])
+                        print(lem_token + 'd', '->', lem_token, 'removed token:', removed_token_val, ", new token:", patent_tokenized_dict[lem_token])
                         plural_count += 1
                     except KeyError:
                         pass
+
+                # Probably want to add case for words ending with '-ing'. Pluringal?
+
+                # Probably want to add case for superlatives so ending with '-est'. Plurest?
+
+                # Probably want to add case for words ending with 'er'
+
+                # Fortunately, we're accessing a dictionary so we don't need to iterate through millions of elements like a list.
+
+
 
                 # If singular version doesnt exist, increment it.
                 if not plural_flag:
