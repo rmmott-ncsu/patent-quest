@@ -1,16 +1,17 @@
-#date searcher
+#date and company searcher
 
 import numpy as np
 import pandas as pd
+import math
 
 #user inputs
 begin_day = 1
 begin_month = 10
-begin_year = 2015
+begin_year = 2013
 end_day = 31
 end_month = 4
-end_year = 2016
-assignee_search = 'Google LLC'
+end_year = 2017
+assignee_search = 'TERYX'
 
 #date calculation
 
@@ -51,26 +52,28 @@ for w in dates:
     else:
         break
 
-print(begin_index)
-print(end_index)
-
 date_search = dates[begin_index:end_index]
 
 
 year_range = end_year - begin_year
 years_mat = np.linspace(begin_year, end_year, year_range+1, dtype=int)
 response_query = []
+
 for y in years_mat:
     # Returns a TextFileReader, which is iterable with chunks of 1000 rows.
     filename = 'patents_' + str(y) + '.csv'
     csv_iterator = pd.read_csv(filename, iterator=True, chunksize=1000)
     
-    # Iterate through the dataframe chunks and print one row/record at a time
+    # Iterate through the dataframe chunks
     for chunk in csv_iterator:
         for index, row in chunk.iterrows():
             if row['patent_date'] in date_search:
-                if row['assignee_org_name'] == assignee_search:
-                    response_query.append(row['patent_abstract'])
+                assignee_org = row['assignee_org_name']
+                if isinstance(assignee_org, str):
+                    if assignee_search in assignee_org:
+                        response_query.append(row['patent_abstract'])
+                    else:
+                        pass
                 else:
                     pass
             else:
