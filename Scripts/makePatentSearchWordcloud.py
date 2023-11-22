@@ -28,13 +28,13 @@ from wordcloud import WordCloud
 
 begin_day = 11
 begin_month = 1
-begin_year = 2020
+begin_year = 2016
 end_day = 5
 end_month = 3
-end_year = 2022
+end_year = 2023
 
 
-assignee_search = 'tesla'
+assignee_search = 'peloton'
 inventor_search = ''
 country_search = ''
 state_search = ''
@@ -149,14 +149,13 @@ response_query = []
 for y in years_mat:
     
 ###############################################################################
-#for each .csv, read in chunks of 10,000 rows at a time, for memory management
+#for each .csv, read in chunks of 1,000 rows at a time, for memory management
 ###############################################################################
     
-    # Returns a TextFileReader, which is iterable with chunks of 10000 rows.
+
     filename = 'patents_' + str(y) + '.csv'
     csv_iterator = pd.read_csv(filename, iterator=True, chunksize=1000)
-    
-    # Iterate through the dataframe chunks
+
     for chunk in csv_iterator:
         for index, row in chunk.iterrows():
 
@@ -240,7 +239,17 @@ stop_words_patent = {'first', 'second', 'include', 'device', 'one', 'system',
                      'determining', 'operating', 'relative','define',
                      'operating','location', 'acceptable', 'thereof', 
                      'composition', 'relates','attached', 'specifically',
-                     'described','and/or','herein','containing'}
+                     'described','and/or','herein','containing', 'housing',
+                     'container', 'positioned', 'particular','received',
+                     'whether', 'receives', 'corresponding', 'identifying',
+                     'identified','determined','according','selected',
+                     'determines','according','whether','respective',
+                     'different','forming','arrange','amount','generate'
+                     'determination','third','different','inside',
+                     'outside','opening','arranged','near','exemplary',
+                     'type','interior','exterior','edge','size', 'various',
+                     'significant','generate','generating','among','cause',
+                     'presented'}
 
 stop_words.update(stop_words_patent)
 
@@ -368,7 +377,7 @@ tokenized_dict = create_asymmetric_word_df(responsive_abstracts_df)
 
 # Sort tokens into dict of num_tokens number of tokens that occur the most frequently
 print("sorting")
-num_tokens = 25
+num_tokens = 100
 sorted_tokens = dict(sorted(tokenized_dict.items(), key=itemgetter(1), reverse=True)[:num_tokens])
 print(sorted_tokens)
 
