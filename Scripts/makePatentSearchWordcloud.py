@@ -13,6 +13,8 @@ from operator import itemgetter
 
 from wordcloud import WordCloud
 
+from PIL import Image
+
 # Have to download stopwords and punkt for nltk library to work correctly.
 # Uncomment 4 lines below and run on it's own after pip install.
 
@@ -26,14 +28,14 @@ from wordcloud import WordCloud
 #this will ultimately structured as a function with 12 inputs
 ##############################################################################
 
-begin_day = 11
+begin_day = 1
 begin_month = 1
-begin_year = 2016
-end_day = 5
-end_month = 3
-end_year = 2023
+begin_year = 2022
+end_day = 25
+end_month = 5
+end_year = 2022
 
-
+patent_number_search = ''
 assignee_search = 'peloton'
 inventor_search = ''
 country_search = ''
@@ -249,7 +251,7 @@ stop_words_patent = {'first', 'second', 'include', 'device', 'one', 'system',
                      'outside','opening','arranged','near','exemplary',
                      'type','interior','exterior','edge','size', 'various',
                      'significant','generate','generating','among','cause',
-                     'presented'}
+                     'presented','layer','model','disclosure', 'e.g.'}
 
 stop_words.update(stop_words_patent)
 
@@ -391,14 +393,16 @@ for k in sorted_tokens.keys():
     k_space = k + ' '
     word_cloud_mat = word_cloud_mat + ([k_space])*sorted_tokens[k]
 
-word_cloud_mat = np.array(word_cloud_mat)
-np.random.shuffle(word_cloud_mat)
-word_cloud_str=''.join(word_cloud_mat)
+word_cloud_str = np.array(word_cloud_mat)
+np.random.shuffle(word_cloud_str)
+word_cloud_str = ''.join(word_cloud_str)
+
+# mask = np.array(Image.open("ny_mono.jpg"))
 
 wordcloud = WordCloud(width = 800, height = 800,
                 background_color ='white',
                 stopwords = stop_words_patent,
-                min_font_size = 10).generate(word_cloud_str)
+                min_font_size = 8).generate(word_cloud_str)
 
 plt.figure(figsize = (8, 8), facecolor = None)
 plt.imshow(wordcloud)
@@ -406,3 +410,70 @@ plt.axis("off")
 plt.tight_layout(pad = 0)
  
 plt.show()
+
+# wordcloud.to_file("apple_2022.jpg")
+
+###############################################################################
+#compare
+###############################################################################
+
+#In this next phase, we will take the results of the word cloud and compare it
+#other patents in the database, to find a list of top ten most similar patents
+#that are not owned by the same company
+
+#First, determine how often each word appears a single time in a patent
+for p in sorted_tokens.keys():
+    sorted_tokens[p]=0
+    for q in response_query:
+        if p in q:
+            sorted_tokens[p] = sorted_tokens[p]+1
+
+#use this number to calculate the probability that the word will appear
+#in a patent known to be responsive to the query
+
+for p in sorted_tokens.keys():
+    sorted_tokens[p] = sorted_tokens[p]/len(response_query)
+
+
+similarity_query = [0, 0]
+prob = 0
+test = 0
+
+#read all the other patents in the same time period
+for y in years_mat:    
+    filename = 'patents_' + str(y) + '.csv'
+    csv_iterator = pd.read_csv(filename, iterator=True, chunksize=1000)
+    for chunk in csv_iterator:
+        for index, row in chunk.iterrows():
+
+            if row['patent_date'] in date_search:
+                patent_ID = row['patent_id']
+                patent_abstract = row['patent_abstract']
+                assignee = row['assignee_org_name']
+                score = 0
+#if the patent was already responsive to the last query (i.e. it was by
+#the same company) then skip it                
+                if isinstance(assignee, str) and assignee_search.lower() in assignee.lower():
+                    pass
+                else:
+#if the patent was not responsive to the first query (i.e. it is by a different
+#or an unknown company), calculate a score by checking for the presence of each
+#of the top 100 words, and then, sum them according to their weight
+#(weight determined by the probaility that the score was found in the patents
+#that were retrieved for the original company)
+                    for p in sorted_tokens.keys():
+                        if p in patent_abstract:
+                            score = score + sorted_tokens[p]*10000
+
+                        else:
+                            pass
+                    arr = np.array([patent_ID, score], dtype=int)
+                    similarity_query=np.vstack((similarity_query,arr))                               
+
+#rank by order
+similarity_query_inv = -1*similarity_query        
+similarity_query_inv_ranked = similarity_query_inv[similarity_query_inv[:, 1].argsort()]   
+similarity_query_ranked = -1*similarity_query_inv_ranked        
+print(similarity_query_ranked[:10,:])
+                
+                
