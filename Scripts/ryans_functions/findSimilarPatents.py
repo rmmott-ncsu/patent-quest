@@ -107,7 +107,7 @@ def rankSimilarPatents(sorted_tokens,response_df,date_search,assignee_search, ye
     similarity_query_inv = -1*similarity_query        
     similarity_query_inv_ranked = similarity_query_inv[similarity_query_inv[:, 1].argsort()]   
     similarity_query_ranked = -1*similarity_query_inv_ranked        
-    similarity_query_top = similarity_query_ranked[0:top-1,:]
+    similarity_query_top = similarity_query_ranked[0:top,:]
     df = pd.DataFrame(similarity_query_top, columns =['Patent Number', 'Score'])
      
     return df
