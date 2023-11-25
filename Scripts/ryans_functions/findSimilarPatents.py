@@ -15,17 +15,17 @@ def rankSimilarPatents(sorted_tokens,response_df,date_search,assignee_search, ye
     
     #First, determine how often each word appears a single time in a patent
     
-    for p in sorted_tokens.keys():
-        sorted_tokens[p]=0
-        for q in response_query:
-            if p in q:
-                sorted_tokens[p] = sorted_tokens[p]+1
+    # for p in sorted_tokens.keys():
+    #     sorted_tokens[p]=0
+    #     for q in response_query:
+    #         if p in q:
+    #             sorted_tokens[p] = sorted_tokens[p]+1
     
-    #use this number to calculate the probability that the word will appear
-    #in a patent known to be responsive to the query
+    # #use this number to calculate the probability that the word will appear
+    # #in a patent known to be responsive to the query
     
-    for p in sorted_tokens.keys():
-        sorted_tokens[p] = sorted_tokens[p]/len(response_query)
+    # for p in sorted_tokens.keys():
+    #     sorted_tokens[p] = sorted_tokens[p]/len(response_query)
     
     similarity_query = [0, 0]
     prob = 0
@@ -84,7 +84,7 @@ def rankSimilarPatents(sorted_tokens,response_df,date_search,assignee_search, ye
                         if cpc_test > 0:
                             for p in sorted_tokens.keys():
                                 if p in patent_abstract:
-                                    score = score + sorted_tokens[p]*10000
+                                    score = score + sorted_tokens[p]
                                 else:
                                     pass
                             arr = np.array([patent_ID, score], dtype=int)
@@ -107,7 +107,7 @@ def rankSimilarPatents(sorted_tokens,response_df,date_search,assignee_search, ye
     similarity_query_inv = -1*similarity_query        
     similarity_query_inv_ranked = similarity_query_inv[similarity_query_inv[:, 1].argsort()]   
     similarity_query_ranked = -1*similarity_query_inv_ranked        
-    similarity_query_top = similarity_query_ranked[0:top,:]
+    similarity_query_top = similarity_query_ranked[0:top-1,:]
     df = pd.DataFrame(similarity_query_top, columns =['Patent Number', 'Score'])
      
     return df
