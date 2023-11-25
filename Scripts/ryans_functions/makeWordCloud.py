@@ -42,3 +42,5 @@ def visualizeWordCloud(sorted_tokens, stop_words, make_wordcloud_jpg, wordcloud_
     plt.show()
     if make_wordcloud_jpg == 'True':
         wordcloud.to_file(wordcloud_filename + ".jpg")
+        
+    return word_cloud_str
