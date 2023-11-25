@@ -1,10 +1,12 @@
-#test
+#metaCode
 
 from queryPatents import searchPatentCSV
 from makeStopWords import makePatentStopwords
 from makeSortedTokens import create_asymmetric_word_df
 from makeWordCloud import visualizeWordCloud
 from findSimilarPatents import rankSimilarPatents
+from findSubclass import rankSubclass
+from checkPredictionAccuracy import isAccurate
 import pandas as pd
 import numpy as np
 
@@ -20,24 +22,24 @@ import numpy as np
 begin_day = 1
 begin_month = 1
 begin_year = 2022
-end_day = 28
-end_month = 2
+end_day = 31
+end_month = 12
 end_year = 2022
 
-patent_number_search = ''
-assignee_search = 'Ford'
+patent_number_search = '11375423'
+assignee_search = ''
 inventor_search = ''
 country_search = ''
 state_search = ''
 city_search = ''
 cpc_search = ''
 
-num_tokens=50
-
 top = 10
 
-make_wordcloud_jpg = 'True'
-wordcloud_filename = 'test_rmott'
+num_tokens=100
+
+make_wordcloud_jpg = ''
+wordcloud_filename = ''
 
 print('querying data')
 response_df, date_search, years_mat = searchPatentCSV(begin_day, begin_month, begin_year, end_day, end_month, 
@@ -52,9 +54,27 @@ print('making sorted tokenized dictionary')
 sorted_tokens = create_asymmetric_word_df(response_df, stop_words, punctuation,num_tokens)
 
 print('making word cloud')
-wordcloud = visualizeWordCloud(sorted_tokens, stop_words, make_wordcloud_jpg, wordcloud_filename)
+word_cloud_str = visualizeWordCloud(sorted_tokens, stop_words, make_wordcloud_jpg, wordcloud_filename)
 
 print('finding similar patents')
 top_similar_patents = rankSimilarPatents(sorted_tokens,response_df,date_search,assignee_search,years_mat,top)
 
+print('top ' + str(top) + ' most similar patents found:')
 print(top_similar_patents)
+
+print('predicting subclass')
+top_predicted_subclasses = rankSubclass(sorted_tokens,response_df,word_cloud_str,top)
+
+print('top ' + str(top) + ' most likely subclasses:')
+print(top_predicted_subclasses)
+
+print('checking accuracy of prediction')
+accurate, actual_subclass = isAccurate(top_predicted_subclasses,response_df)
+
+if accurate == True:
+    print('Confirmed -- the prediction was correct.')
+    print('The class was: ' + str(actual_subclass))
+
+else:
+    print('Incorrect -- the prediction was incorrect.')    
+    print('The actual class was: ' + str(actual_subclass))
