@@ -1,5 +1,35 @@
 #metaCode
 
+#metaCode.py provides an example on how to use each function (except for checkSuperAccuracy.py).  
+#it is best to start there.  choose the search criteria, whether you want a wordcloud, 
+#and what filename the wordcloud should have.
+
+#queryPatents.py will search a given set of patents based on a query.  
+#you must provide a date range.  note that for longer date ranges, the query can be slow.
+
+#makeStopWords.py makes a corpus of stop words using provided ones as well as patent-specific 
+#ones found during the course of this project
+
+#makeSortedTokens.py makes a tokenized list of the most common words of the 
+#abstract or abstracts found in the search query
+
+#makeWordCloud.py makes a Word Cloud visualization based on the output from makeSortedTokens.py
+
+#findSimilarPatents.py ranks the ten most similar patents in the 
+#same date range that did not come from the same assignee.
+
+#findSubclass.py makes a prediction of technological class based on a 
+#weighted word frequency similarity comparison
+
+#findNBSubclass makes a prediction of technological class based on a Naive Bayes model
+
+#checkPredictionAccuracy.py evaluates whether a given subclass (word frequency or NB) 
+
+#checkSuperAccuracy.py is the only code independent of metaCode.  
+#It performs an iterative accuracy test of the classifier algorithm 
+#and produces a chart showing accuracy convergence as well as a .txt log of every prediction made
+
+
 from queryPatents import searchPatentCSV
 from makeStopWords import makePatentStopwords
 from makeSortedTokens import create_asymmetric_word_df
