@@ -1,1 +1,1 @@
-this directory contains a .csv of all of the patent subclasses used in 2022, along with the top 100 words found in each subclass and their frequency
+this directory contains a .csv of all of the patent subclasses in the training sets, along with the top 100 words found in each subclass and their frequency
