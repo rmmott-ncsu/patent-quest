@@ -1,1 +1,1 @@
-contains wordcloud examples for patent subclasses
+ the entire 10 years' worth of data was searched for every instance of each CPC subclass.  For each CPC subclass, the top 200 most common words were compiled into a dataframe, along with each word's frequency.  the number of instances of each class was reported as well.
