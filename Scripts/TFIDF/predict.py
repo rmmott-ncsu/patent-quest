@@ -3,51 +3,19 @@ from nltk.corpus import stopwords
 import operator
 import pandas as pd
 
+from StopWords import stop_words_patent
+
 # Create dict of top 10 CPC predictions. Key=CPC, value = score
-def predict(abstract: str) -> dict:
+def predict(abstract: str, tfidf_super_data: list) -> tuple:
+    data = tfidf_super_data
     score_dict = dict()
     stop_words = set(stopwords.words('english'))
-    stop_words_patent = {'first', 'second', 'include', 'device', 'one', 'system',
-                         'method', 'data', 'least', 'base', 'may', 'provide',
-                         'configure', 'plurality', 'portion', 'method',
-                         'surface', 'unit', 'information', 'user', 'image',
-                         'control', 'including', 'element', 'includes', 'configured',
-                         'based', 'provided', 'receive', 'end', 'apparatus', 'member',
-                         'body', 'wherein', 'use', 'comprise', 'present', 'set',
-                         'communication', 'determine', 'using', 'position', 'also',
-                         'structure', 'region', 'side', 'part', 'comprising',
-                         'assembly', 'direction', 'value', 'connected', 'embodiment',
-                         'associate', 'disclose', 'output', 'input', 'component',
-                         'invention', 'comprises', 'consisting', 'associate',
-                         'couple', 'within', 'disclosed', 'relate', 'far', 'formed',
-                         'two', 'operation', 'receiving', 'module', 'coupled',
-                         'associated', 'dispose', 'object', 'area', 'section',
-                         'process', 'disposed', 'provides', 'resulting', 'capable',
-                         'example', 'response', 'via', 'response', 'along',
-                         'determining', 'operating', 'relative', 'define',
-                         'operating', 'location', 'acceptable', 'thereof',
-                         'composition', 'relates', 'attached', 'specifically',
-                         'described', 'and/or', 'herein', 'containing', 'housing',
-                         'container', 'positioned', 'particular', 'received',
-                         'whether', 'receives', 'corresponding', 'identifying',
-                         'identified', 'determined', 'according', 'selected',
-                         'determines', 'according', 'whether', 'respective',
-                         'different', 'forming', 'arrange', 'amount', 'generate'
-                                                                      'determination', 'third', 'different', 'inside',
-                         'outside', 'opening', 'arranged', 'near', 'exemplary',
-                         'type', 'interior', 'exterior', 'edge', 'size', 'various',
-                         'significant', 'generate', 'generating', 'among', 'cause',
-                         'presented', 'layer', 'model', 'disclosure', 'e.g.',
-                         'producing', 'nearly', 'allows', 'produced', 'increase'
-                                                                      'following', 'generally', 'preparing', 'another',
-                         'thus', 'new'}
+
     stop_words.update(stop_words_patent)
 
     punctuation = "!@#$%^&*()_+-={[}]:;<,>.?/"
     # open tf-idf file
-    with open('tfidf_2020.csv', 'r', encoding='utf-8') as infile:
-        reader = csv.DictReader(infile)
-        data = [row for row in reader]
+
 
     tokenized_abstract = abstract.split(' ')
 
@@ -67,9 +35,9 @@ def predict(abstract: str) -> dict:
                         break
                     except KeyError:
                         pass
-    sorted_scores = dict(sorted(score_dict.items(), key=operator.itemgetter(1), reverse=True)[:10])
-
-    return sorted_scores
+    sorted_scores_10 = dict(sorted(score_dict.items(), key=operator.itemgetter(1), reverse=True)[:10])
+    sorted_scores_5 = dict(sorted(sorted_scores_10.items(), key=operator.itemgetter(1), reverse=True)[:10])
+    return sorted_scores_10, sorted_scores_5
 
 # Get top score from dictionary object of scores
 def max_prediction(score_dict: dict) -> str:
@@ -81,25 +49,67 @@ def check_lem(word: str):
     return word, word[:-1], word[:-4], word[:-3]
 
 # Iterate through patent file and make predictions, compare to real data, return score
-def predict_batch():
-    df = pd.read_csv('patents_csv/patents_2020.csv').head(3000)
+# If top prediction is in list of patent cpc's, score += 1, otherwise score += 0
+def predict_batch(tf_idf_file: str = 'tfidf_single_cpc.csv', test_data_file: str='patents_csv/patents_2020.csv'):
+    df = pd.read_csv(test_data_file).head(10000)
     rel_df = df[["patent_id", 'cpc_subclass_id', 'patent_abstract']]
+    pred_dict = {}
+    count_dict = {}
+
+    with open(tf_idf_file, 'r', encoding='utf-8') as infile:
+        reader = csv.DictReader(infile)
+        data = [row for row in reader]
+
     count = 0
     pred_score = 0
+    pred_score_5 = 0
+    pred_score_10 = 0
     for index, row in rel_df.iterrows():
         count += 1
-        prediction = predict(row['patent_abstract'])
-        max_score = max_prediction(prediction)
+        prediction_10, prediction_5 = predict(row['patent_abstract'], data)
+        max_score = max_prediction(prediction_10)
         try:
-            if max_score in row['cpc_subclass_id']:
+            actual = row['cpc_subclass_id']
+            if max_score in actual:
+                try:
+                    pred_dict[max_score][0] += 1
+                except KeyError:
+                    pred_dict[max_score] = [1, 0]
                 pred_score += 1
+
+            else:
+                try:
+                    pred_dict[max_score][1] += 1
+                except KeyError:
+                    pred_dict[max_score] = [0, 1]
+
+            if score_prediction(list(prediction_5.keys()), actual):
+                pred_score_5 += 1
+
+            if score_prediction(list(prediction_10.keys()), actual):
+                pred_score_10 += 1
+
         except TypeError:
-            print(row['patent_id'])
+            pass
 
+    print('Top Accuracy', pred_score, count)
+    print('Top 5 Accuracy', pred_score_5, count)
+    print('Top 10 Accuracy', pred_score_10, count)
+    print(pred_dict)
+    print(count_dict)
+    print()
 
+def score_prediction(prediction_list: list, actual: str):
+    for cpc in prediction_list:
+        if cpc in actual:
+            return True
+    return False
 
-    print(pred_score, count)
-
-
-predict_batch()
+if __name__ == '__main__':
+    predict_batch('tfidf_calc_2020.csv', 'patents_csv/patents_2014.csv')
+    predict_batch('tfidf_calc_2020.csv', 'patents_csv/patents_2015.csv')
+    predict_batch('tfidf_calc_2020.csv', 'patents_csv/patents_2016.csv')
+    predict_batch('tfidf_calc_2020.csv', 'patents_csv/patents_2017.csv')
+    predict_batch('tfidf_calc_2020.csv', 'patents_csv/patents_2018.csv')
+    predict_batch('tfidf_calc_2020.csv', 'patents_csv/patents_2019.csv')
 
