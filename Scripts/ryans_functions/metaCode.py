@@ -6,7 +6,9 @@ from makeSortedTokens import create_asymmetric_word_df
 from makeWordCloud import visualizeWordCloud
 from findSimilarPatents import rankSimilarPatents
 from findSubclass import rankSubclass
+from findNBSubclass import rankNBSubclass
 from checkPredictionAccuracy import isAccurate
+
 import pandas as pd
 import numpy as np
 
@@ -21,12 +23,12 @@ import numpy as np
 
 begin_day = 1
 begin_month = 1
-begin_year = 2022
+begin_year = 2018
 end_day = 31
 end_month = 12
-end_year = 2022
+end_year = 2018
 
-patent_number_search = '11375423'
+patent_number_search = '10032154'
 assignee_search = ''
 inventor_search = ''
 country_search = ''
@@ -38,8 +40,8 @@ top = 10
 
 num_tokens=100
 
-make_wordcloud_jpg = ''
-wordcloud_filename = ''
+make_wordcloud_jpg = 'False'
+wordcloud_filename = 'nofile'
 
 print('querying data')
 response_df, date_search, years_mat = searchPatentCSV(begin_day, begin_month, begin_year, end_day, end_month, 
@@ -69,7 +71,7 @@ print('top ' + str(top) + ' most likely subclasses:')
 print(top_predicted_subclasses)
 
 print('checking accuracy of prediction')
-accurate, actual_subclass = isAccurate(top_predicted_subclasses,response_df)
+top10_accurate, top5_accurate, accurate, actual_subclass = isAccurate(top_predicted_subclasses,response_df)
 
 if accurate == True:
     print('Confirmed -- the prediction was correct.')
@@ -78,3 +80,19 @@ if accurate == True:
 else:
     print('Incorrect -- the prediction was incorrect.')    
     print('The actual class was: ' + str(actual_subclass))
+    
+print('predicting subclass with Naive Bayes')
+print('top ' + str(top) + ' most likely subclasses:')
+top_predicted_NBsubclasses = rankNBSubclass(sorted_tokens,response_df,word_cloud_str,top)    
+
+print('checking accuracy of prediction')
+top10_accurate, top5_accurate, accurate, actual_subclass = isAccurate(top_predicted_NBsubclasses,response_df)
+
+if accurate == True:
+    print('Confirmed -- the prediction was correct.')
+    print('The class was: ' + str(actual_subclass))
+
+else:
+    print('Incorrect -- the prediction was incorrect.')    
+    print('The actual class was: ' + str(actual_subclass))
+    
