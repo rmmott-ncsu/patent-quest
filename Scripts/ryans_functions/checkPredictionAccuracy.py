@@ -18,6 +18,8 @@ def isAccurate(top_predicted_subclasses,response_df):
             continue
     
     accurate = False
+    top5_accurate = False
+    top10_accurate = False
     
     for subclass in cpc_checker:
         if subclass == top_predicted_subclasses.iloc[0]['CPC Class']:
@@ -25,4 +27,18 @@ def isAccurate(top_predicted_subclasses,response_df):
         else:
             pass
         
-    return accurate, cpc_checker
+    for subclass in cpc_checker:
+        for predicted_sub in top_predicted_subclasses.iloc[0:5]['CPC Class']:
+            if subclass == predicted_sub:
+                    top5_accurate = True
+            else:
+                pass
+    
+    for subclass in cpc_checker:
+        for predicted_sub in top_predicted_subclasses['CPC Class']:
+            if subclass == predicted_sub:
+                    top10_accurate = True
+            else:
+                pass    
+    
+    return top10_accurate, top5_accurate, accurate, cpc_checker
