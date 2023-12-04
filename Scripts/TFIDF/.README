@@ -1,1 +1,7 @@
-
+1) Generate word count CSV  
+  Use get_word_count.py.get_word_count_for_file to generate CSV
+  
+2) Generate TF-IDF CSV
+  User tf-idf.py to generate CSV
+  
+3) Use Predict.py to make batch of predictions
