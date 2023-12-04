@@ -1,4 +1,11 @@
-#prediction_test
+#check super accuracy
+#NOTE: with a sample size of 1000, this will take about 3 - 5 hours
+#reduce sample size to 10 or 100 for a quick check of the code
+#This program will produce a chart, as well as a .txt file (output.txt)
+#The chart will show the convergence of accuracy for the top hit, and the top 5 and top 10
+#The output.txt provides a log of every patent search along with the ten
+#most likely classes.
+
 import numpy as np
 import pandas as pd
 import random
@@ -19,6 +26,7 @@ accurate_mat = 0
 total_mat = 0
 num_tokens = 200
 
+#2023 is the testing set
 filename = 'patents_2023.csv'
 top = 10
 
