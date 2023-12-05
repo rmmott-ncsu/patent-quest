@@ -117,7 +117,7 @@ Using only the words in the patent abstracts, we will enable allow a user to per
 We will demonstrate the usefulness of this method  by carrying out two further experiments: first, we will return a list of similar patents, judged by the presence of the same common keywords in their abstracts; and second, we will make a prediction as to the technological class of the patent, and report its accuracy.  These metrics will demonstrate this method’s utility as an efficient, simple method to quickly convey essential patent information, without committing large resources to analyzing the entire text of the patents as other machine learning methods have done.
 
 \subsection{Detailed Description of the Statistical Methods}
-The first step in the methodology is to prepare the WordCloud visualization and associated text information.  This includes gathering the data from publicly-available datasets and using lemmatization, tokenization, and stop words to create a robust dataset upon which the experimentation can take place.  As part of this process, a dictionary of “patent-specific” stop words is created by randomly querying the dataset and identifying patents that appear in abstracts regardless of search query, and combined with publicly available stopword sets such as that available from NTLK.  The dataset comprises all words identified in responsive patent abstracts that meet the following criteria, along with their frequency.  Thus,
+The first step in the methodology is to prepare the WordCloud visualization and associated text information.  This includes gathering the data from publicly-available datasets and using lemmatization, tokenization, and stop words to create a robust dataset upon which the experimentation can take place.  As part of this process, a dictionary of “patent-specific” stop words is created by randomly querying the dataset and identifying patents that appear in abstracts regardless of search query, and combined with publicly available stopword sets such as that available from NLTK.  The dataset comprises all words identified in responsive patent abstracts that meet the following criteria, along with their frequency.  Thus,
 
 \begin{equation}
 tokenized\_abstract\_words, frequency = \sum_{i=1}^{i=100} [(lemmatized\_words - stop\_words) * frequency]_i
@@ -151,15 +151,8 @@ This is found by computing the probability of being in that particular class:
 P(class)\, =\,  \frac{frequency(class)}{frequency(all\, classes)}
 \end{equation}
 
-
 Multiplied by the probability of having a word in the body if it is of a given class:
 
-\begin{equation}
-P(presence\, of\, word\, |\, class)\, =\, \frac{frequency(word)}{frequency(class)}
-\end{equation}
-
-
-In other words,
 \begin{equation}
 P(class\, |\, presence\, of\, word)\, =\, P(class)\, *\, P(presence\, of\, word\, |\, class)
 \end{equation}
@@ -172,9 +165,7 @@ P(class\, |\, presence\, of\, words)\,
 The probability is found by multiplying the frequency of the class by the individual probabilities of the multiple words:
 
 \begin{equation}
-P(class\, |\, presence\, of\, words)\, =\, P(class)*
-\end{equation}
- \[ \prod_{i}^{n}P(presence\, of\, word_i\, |\, class) \]
+P(class\, |\, presence\, of\, words)\, =\, P(class)* \end{equation}\[ \prod_{i}^{n}P(presence\, of\, word_i\, |\, class) \]
  
   The ultimate conclusion as to what class it falls in is:
   
@@ -214,11 +205,7 @@ Dataset: All Patent Abstracts from Patents Issued from 2013-2023
 
 Although full text patents are available directly as bulk downloads from the United States Patent and Trademark Office, the sheer volume of the data – which includes every word written in every patent issued since 2002 – made it cumbersome to use. Each day, around 1,000 U.S. patents are issued, almost a patent a minute, with each patent typically having dozens of pages of dual-column text.  Since our project is focused primarily on a small subset of this text (the abstract and the title), collecting the data in bulk form would have been unwieldy and enormously inefficient.
 
-Fortunately, data from patents (since 1976) and patent applications (since 2001) are also available as part of a mySQL relational database hosted at PatentsView.org\cite{website:pv1}. Using the available API query tools\cite{website:pv2}, one can pull a selection of fields that enables the ability to search, within a given data range, all patent abstracts based on the following fields: patent ID, title, inventor, company (assignee), technological class (CPC class), city, state, and country.  Using this approach, one can retrieve a dataset containing the previous ten years of patent titles and abstracts - from 2013 to 2023 - and store that data in a manageable file size.  
-
-The data can be separated by year into separate .csv files, which are capable of being loaded into pandas dataframes using the pandas read\_csv() function.  A representative sample of this data appears at our GitHub repository, located here: https://github.ncsu.edu/rmmott/-engr-ALDA-Fall2023-P4, and the remaining data can be requested from the authors.  
-
-\ul{Plan and Experimentation: We Hypothesize that Patents Abstracts are a Useful Indicator of Subject Matter, and Will Test This Hypothesis through Experimentation}
+Fortunately, data from patents (since 1976) and patent applications (since 2001) are also available as part of a mySQL relational database hosted at PatentsView.org\cite{website:pv1}. Using the available API query tools\cite{website:pv2}, one can pull a selection of fields that enables the ability to search, within a given data range, all patent abstracts based on the following fields: patent ID, title, inventor, company (assignee), technological class (CPC class), city, state, and country.  Using this approach, one can retrieve a dataset containing the previous ten years of patent titles and abstracts - from 2013 to 2023 - and store that data in a manageable file size. The data can be separated by year into separate .csv files, which are capable of being loaded into pandas dataframes using the pandas read\_csv() function.
 
 Using our methodologies, we present the following hypotheses to confirm through experimentation on the dataset referenced above:
 
@@ -231,8 +218,13 @@ Using our methodologies, we present the following hypotheses to confirm through 
 
 To test this hypothesis, we can develop a search query to search the data and retrieve relevant patent abstracts, process those abstracts, and create WordClouds associated with well known companies to see if they convey useful information.
 
-For this experiment, we developed the following functions: \textbf{queryPatents.py} searches the dataset for patents based on date range, inventor, assignee, location, or technological class, \textbf{makeStopWords.py} makes a corpus of stop words to ignore when processing the data, which we generated by including standard stopwords provided by NLTK, as well as patent-specific stopwords we learned from conducting random samplings of the dataset and identifying common words that appear regardless of search query, \textbf{makeSortedTokens.py} makes a lemmatized, tokenized list of the most common words of the abstract or abstracts found in the search query, and \textbf{makeWordCloud.py} makes a Word Cloud visualization based on the output from makeSortedTokens.py. We then tested the following four well-known companies to generate WordClouds of their intellectual property: Cisco, Pfizer, Tesla, Hasbro.
-
+For this experiment, we developed the following functions:
+\begin{itemize}
+  \item \textbf{queryPatents.py} searches the dataset for patents based on date range, inventor, assignee, location, or technological class
+  \item \textbf{makeStopWords.py} makes a corpus of stop words to ignore when processing the data, which we generated by including standard stopwords provided by NSTK, as well as patent-specific stopwords we learned from conducting random samplings of the dataset and identifying common words that appear regardless of search query
+  \item \textbf{makeSortedTokens.py} makes a lemmatized, tokenized list of the most common words of the abstract or abstracts found in the search query
+  \item \textbf{makeWordCloud.py} makes a Word Cloud visualization based on the output from makeSortedTokens.py
+\end{itemize}
 \subsection{Experiment 2}
 \noindent\fbox{%
 	\parbox{\textwidth}{%
@@ -242,7 +234,10 @@ For this experiment, we developed the following functions: \textbf{queryPatents.
 
 To test this hypothesis, we can develop use the results of the functions from Experiment 1 to identify a set of tokenized words found in retrieved patent abstracts, and then, use those words to search for other patents.
 
-For this experiment, we developed the following function: \textbf{findSimilarPatents.py} which uses the methodology described above to retrieve and rank patents by a similarity score based on the frequency of words present in both the patents and the retrieved patent abstracts. We then identified four well-known companies to analyze their patent portfolio and find similar patents: Toyota, Medtronic, Caterpillar, Merck.
+For this experiment, we developed the following function:
+\begin{itemize}
+  \item \textbf{findSimilarPatents.py} which uses the methodology described above to retrieve and rank patents by a similarity score based on the frequency of words present in both the patents and the retrieved patent abstracts
+\end{itemize}
 
 \subsection{Experiment 3}
 \noindent\fbox{%
@@ -253,7 +248,11 @@ For this experiment, we developed the following function: \textbf{findSimilarPat
 
 To test this hypothesis, we can use two separate algorithms, Naive Bayes and TF-IDF, to attempt to classify individual patents based on technological class; and then devise large-scale accuracy-checking algorithms to perform a defensible measure of accuracy.
 
-For this experiment, we developed the following functions: \textbf{findNBSubclass.py}, which uses the Naive Bayesian methodology described above to predict a patent’s class, and \textbf{tf-idf.py}, which uses the TF-IDF methodology described above to predict a patent’s class. We then evaluated accuracy through the script \textbf{checkSuperAccuracy.py}, which establishes an algorithm to call findNBSubclass.py 1000 times, reports the overall accuracy, and produces a plot to show the convergence of accuracy as the trials progress.
+For this experiment, we developed the following functions:
+\begin{itemize}
+  \item \textbf{findNBSubclass.py}, which uses the Naive Bayesian methodology described above to predict a patent’s class
+  \item \textbf{tf-idf.py}, which uses the TF-IDF methodology described above to predict a patent’s class
+\end{itemize}
 
 \section{Results}
 \subsection{Experiment 1. Word Cloud Visualizations}
@@ -272,7 +271,7 @@ Each WordCloud contains a series of words that align with the types of innovatio
 Below are pictured the most similar patents found for the test companies, Toyota, Medtronic, Caterpillar, and Boeing, in the years 2019-20.
 
 \begin{figure}[H]
-\includegraphics[width=12cm, height=3cm]{exp2_result}
+\includegraphics[width=14cm, height=2.5cm]{exp2_result}
 \centering
 \caption{Patents most similar to company’s patent portfolio: Toyota, Medtronic, Caterpillar, and Boeing (L to R)}
 \label{fig:exp2_result}
@@ -296,11 +295,11 @@ Pictured below are the results of the accuracy test over the course of 1000 tria
 \end{figure}
 
 
-As shown, after 1000 runs, the Naive Bayes model converged to a single prediction accuracy of 0.41.  This means the model’s top prediction was one of the patents actual assigned classes 41\% of the time. Additionally, it had five class prediction accuracy of 0.76, and ten class prediction accuracy of 0.77, meaning that at least one of the top five predictions was in the patents actual assigned classes 76\% and 77\% of the time, respectively.  A similar accuracy test was performed on the TF-IDF model.  TF-IDF as a metric for predicting patent class had single prediction accuracy of 0.294, and a five and ten class prediction accuracy of 0.70. Additionally, it had five class prediction accuracy of 0.70 meaning at least one of the top five predictions was in the patents actual assigned classes 70\% of the time. Models were validated using K-Fold validation, and were stable across all folds ranging from 0.28-0.31 for single prediction, and 0.68 to 0.73 for five class prediction. K-Folds were made by training on one year's data, and testing on all other years' data. Considering there are 683 possible classes, this model performed significantly better than random guess which would have an expected accuracy of 0.0015. 
+As shown, after 1000 runs, the Naive Bayes model converged to a single prediction accuracy of 0.41.  This means the model’s top prediction was one of the patents actual assigned classes 41\% of the time. Additionally, it had five class prediction accuracy of 0.76, and ten class prediction accuracy of 0.77, meaning that at least one of the top five predictions was in the patents actual assigned classes 76\% and 77\% of the time, respectively.  A similar accuracy test was performed on the TF-IDF model.  TF-IDF as a metric for predicting patent class had single prediction accuracy of 0.294, and a five and ten class prediction accuracy of 0.70. Additionally, it had five class prediction accuracy of 0.70 meaning at least one of the top five predictions was in the patents actual assigned classes 70\% of the time. Models were validated using K-Fold validation, and were stable across all folds ranging from 0.28-0.31 for single prediction, and 0.68 to 0.73 for five class prediction. K-Folds were made by training on one year's data, and testing on all other years' data. 
 
-An interesting trend common to both models is the unexpected similarity between the five class and ten class prediction accuracy (0.76/0.77 for Naive Bayes, and 0.70/0.70 for TF-IDF).  The similarity in accuracy suggests that there were very few instances where the models could identify the class correctly in the top ten, but not in the top five. In addition, it seems as though the models were better at predicting some classes than others.   For example, in the TF-IDF classification model, one interesting thing to note is that at most 400 unique classes, or about 60\% of classes were predicted using single class prediction. The left image of \autoref{fig:exp3_result} is a plot showing, for the TF-IDF model, the accuracy of the model with respect to some of the most frequent CPC classes.  The blue vertical lines represent the model’s accuracy for each class, while the orange line represents the number of times that each class was represented in the training set. As shown by the higher concentration of blue lines to the left, the representation of the class in the dataset was relevant to whether a class would be predicted at all.  However, it was not dispositive.  Indeed, the model correctly predicted CPC subclasses with as low as 6 representative samples and had 0\% accuracy for CPC subclasses with as high as 14,313 samples.  In general, data did not appear to be indicative of predictive accuracy beyond there being 500 representative samples. 
+Considering there are 683 possible classes, this model performed significantly better than random guess which would have an expected accuracy of 0.0015. An interesting trend common to both models is the unexpected similarity between the five class and ten class prediction accuracy (0.76/0.77 for Naive Bayes, and 0.70/0.70 for TF-IDF).  The similarity in accuracy suggests that there were very few instances where the models could identify the class correctly in the top ten, but not in the top five. In addition, it seems as though the models were better at predicting some classes than others.   For example, in the TF-IDF classification model, one interesting thing to note is that at most 400 unique classes, or about 60\% of classes were predicted using single class prediction. The left image of \autoref{fig:exp3_result} is a plot showing, for the TF-IDF model, the accuracy of the model with respect to some of the most frequent CPC classes.  The blue vertical lines represent the model’s accuracy for each class, while the orange line represents the number of times that each class was represented in the training set. 
 
-Overall, it appears that the queried text from patent abstracts can be used to identify patents as being part of a particular class, with an accuracy that is somewhere around 30-40\%, depending on the algorithm.  Compared to existing models of patent classification, which show accuracies between 52\% and 67\%\cite{article:kamateri}, the presented models are less accurate.  It is important to note, however, that unlike the prediction methods described in the literature, the presented models are based on the patent abstracts alone, and are presented primarily to provide a verifiable metric of usefulness of the patent abstract in determining the content of the patent, rather than creating a robust method of patent classification.  Still, it is clear that with some additional refinements – such as the ensemble methods discussed in Kamateri, et al. – there may be ways to improve the classification methodologies and produce more accurate predictions.
+As shown by the higher concentration of blue lines to the left, the representation of the class in the dataset was relevant to whether a class would be predicted at all.  However, it was not dispositive.  Indeed, the model correctly predicted CPC subclasses with as low as 6 representative samples and had 0\% accuracy for CPC subclasses with as high as 14,313 samples.  In general, data did not appear to be indicative of predictive accuracy beyond there being 500 representative samples. Overall, it appears that the queried text from patent abstracts can be used to identify patents as being part of a particular class, with an accuracy that is somewhere around 30-40\%, depending on the algorithm.  Compared to existing models of patent classification, which show accuracies between 52\% and 67\%\cite{article:kamateri}, the presented models are less accurate.  It is important to note, however, that unlike the prediction methods described in the literature, the presented models are based on the patent abstracts alone, and are presented primarily to provide a verifiable metric of usefulness of the patent abstract in determining the content of the patent, rather than creating a robust method of patent classification.  Still, it is clear that with some additional refinements – such as the ensemble methods discussed in Kamateri, et al. – there may be ways to improve the classification methodologies and produce more accurate predictions.
 
 \subsection{Conclusions}
 Overall, this project has demonstrated the feasibility and effectiveness of employing data mining techniques to extract valuable insights from millions of patent abstracts.  By devising a methodology to systematically create WordClouds of patents or patent portfolio, we enabled a means to quickly compare large volumes of patent data.  The usefulness of this data was confirmed by its ability to predict, using Naive Bayes and TF-IDF methods, a patent’s given class with 30-40\% accuracy. Most of the challenges involved in this process revolved around the quantity of data.  Even limiting data to the patent abstracts from the past ten years, the sheer size of the patent dataset (3 million patents) tested the limit of physical memory for our computers, which required us to adopt some memory management and batch processing approaches that were novel to us.  
