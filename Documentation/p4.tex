@@ -137,7 +137,7 @@ The second step in the methodology is to identify patents that have abstracts th
 
 Thus, if a given word is found within a patent’s abstract, then the patent’s similarity score is increased by the frequency that the given word was found in the data that generated the WordCloud.  Using this approach, if a term is more often used in the WordCloud, it will be weighed more heavily in the similarity score of a given patent, which is a more robust approach than simply weighing each word equally.
 
-The third step in the methodology is to identify a patent’s technological class using a Naive Bayes algorithm.  For this, we use the methodology of step 1 to create WordClouds for each of the nearly 700 technological classes assigned by the patent office to newly issued patents from 2013 - 2022.  The text and frequency data underlying these WordClouds, along with the frequency that each technological class appeared in the dataset, is then used to create a training dataset.  The training dataset is then one-hot encoded, wherein each unique word obtained for the 700 classes is provided a separate cell.  Using this one-hot encoding matrix, which consists of 672 classes and 7200 unique words, as well as frequency data for each class, a comprehensive Naive Bayes algorithm could be implemented more simply, and quickly, than using the tokenized data and frequencies of the initial training set.
+The third step in the methodology is to identify a patent’s technological class using a Naive Bayes algorithm.  For this, we use the methodology of step 1 to create WordClouds for each of the nearly 700 technological classes assigned by the patent office to newly issued patents from 2013 - 2022\footnote{Data from 2023 was reserved as a testing set.}.  The text and frequency data underlying these WordClouds, along with the frequency that each technological class appeared in the dataset, is then used to create a training dataset.  The training dataset is then one-hot encoded, wherein each unique word obtained for the 700 classes is provided a separate cell.  Using this one-hot encoding matrix, which consists of 672 classes\footnote{Some of the technological classes did not appear in issued patents in 2013 - 2022.  Therefore, although there are 683 possible classes, not all appeared in the training set, and thus, were not included in the model} and 7200 unique words, as well as frequency data for each class, a comprehensive Naive Bayes algorithm could be implemented more simply, and quickly, than using the tokenized data and frequencies of the initial training set.
 
 The Naive Bayes algorithm itself proceeds as follows.  Ultimately, we are seeking the probability that, given the presence of words in a patent’s abstract, the patent will fall within a given class, or:
 
@@ -242,12 +242,7 @@ For this experiment, we developed the following functions: \textbf{queryPatents.
 
 To test this hypothesis, we can develop use the results of the functions from Experiment 1 to identify a set of tokenized words found in retrieved patent abstracts, and then, use those words to search for other patents.
 
-For this experiment, we developed the following function:
-\begin{itemize}
-  \item \textbf{findSimilarPatents.py} which uses the methodology described above to retrieve and rank patents by a similarity score based on the frequency of words present in both the patents and the retrieved patent abstracts
-\end{itemize}
-
-We then identified four well-known companies to analyze their patent portfolio and find similar patents: Toyota, Medtronic, Caterpillar, Merck.
+For this experiment, we developed the following function: \textbf{findSimilarPatents.py} which uses the methodology described above to retrieve and rank patents by a similarity score based on the frequency of words present in both the patents and the retrieved patent abstracts. We then identified four well-known companies to analyze their patent portfolio and find similar patents: Toyota, Medtronic, Caterpillar, Merck.
 
 \subsection{Experiment 3}
 \noindent\fbox{%
@@ -258,13 +253,7 @@ We then identified four well-known companies to analyze their patent portfolio a
 
 To test this hypothesis, we can use two separate algorithms, Naive Bayes and TF-IDF, to attempt to classify individual patents based on technological class; and then devise large-scale accuracy-checking algorithms to perform a defensible measure of accuracy.
 
-For this experiment, we developed the following functions:
-\begin{itemize}
-  \item \textbf{findNBSubclass.py}, which uses the Naive Bayesian methodology described above to predict a patent’s class
-  \item \textbf{tf-idf.py}, which uses the TF-IDF methodology described above to predict a patent’s class
-\end{itemize}
-
-We then evaluated accuracy through the script \textbf{checkSuperAccuracy.py}, which establishes an algorithm to call findNBSubclass.py 1000 times, reports the overall accuracy, and produces a plot to show the convergence of accuracy as the trials progress.
+For this experiment, we developed the following functions: \textbf{findNBSubclass.py}, which uses the Naive Bayesian methodology described above to predict a patent’s class, and \textbf{tf-idf.py}, which uses the TF-IDF methodology described above to predict a patent’s class. We then evaluated accuracy through the script \textbf{checkSuperAccuracy.py}, which establishes an algorithm to call findNBSubclass.py 1000 times, reports the overall accuracy, and produces a plot to show the convergence of accuracy as the trials progress.
 
 \section{Results}
 \subsection{Experiment 1. Word Cloud Visualizations}
@@ -307,13 +296,9 @@ Pictured below are the results of the accuracy test over the course of 1000 tria
 \end{figure}
 
 
-As shown, after 1000 runs, the Naive Bayes model converged to a single prediction accuracy of 0.41.  This means the model’s top prediction was one of the patents actual assigned classes 41\% of the time. Additionally, it had five class prediction accuracy of 0.76, and ten class prediction accuracy of 0.77, meaning that at least one of the top five predictions was in the patents actual assigned classes 76\% and 77\% of the time, respectively.  
-A similar accuracy test was performed on the TF-IDF model.  TF-IDF as a metric for predicting patent class had single prediction accuracy of 0.294, and a five and ten class prediction accuracy of 0.70. Additionally, it had five class prediction accuracy of 0.70 meaning at least one of the top five predictions was in the patents actual assigned classes 70\% of the time.
-Models were validated using K-Fold validation, and were stable across all folds ranging from 0.28-0.31 for single prediction, and 0.68 to 0.73 for five class prediction. K-Folds were made by training on one year's data, and testing on all other years' data. Considering there are 683 possible classes, this model performed significantly better than random guess which would have an expected accuracy of 0.0015. 
-An interesting trend common to both models is the unexpected similarity between the five class and ten class prediction accuracy (0.76/0.77 for Naive Bayes, and 0.70/0.70 for TF-IDF).  The similarity in accuracy suggests that there were very few instances where the models could identify the class correctly in the top ten, but not in the top five.  
-	In addition, it seems as though the models were better at predicting some classes than others.   For example, in the TF-IDF classification model, one interesting thing to note is that at most 400 unique classes, or about 60\% of classes were predicted using single class prediction. The left image of \autoref{fig:exp3_result} is a plot showing, for the TF-IDF model, the accuracy of the model with respect to some of the most frequent CPC classes.  The blue vertical lines represent the model’s accuracy for each class, while the orange line represents the number of times that each class was represented in the training set.
+As shown, after 1000 runs, the Naive Bayes model converged to a single prediction accuracy of 0.41.  This means the model’s top prediction was one of the patents actual assigned classes 41\% of the time. Additionally, it had five class prediction accuracy of 0.76, and ten class prediction accuracy of 0.77, meaning that at least one of the top five predictions was in the patents actual assigned classes 76\% and 77\% of the time, respectively.  A similar accuracy test was performed on the TF-IDF model.  TF-IDF as a metric for predicting patent class had single prediction accuracy of 0.294, and a five and ten class prediction accuracy of 0.70. Additionally, it had five class prediction accuracy of 0.70 meaning at least one of the top five predictions was in the patents actual assigned classes 70\% of the time. Models were validated using K-Fold validation, and were stable across all folds ranging from 0.28-0.31 for single prediction, and 0.68 to 0.73 for five class prediction. K-Folds were made by training on one year's data, and testing on all other years' data. Considering there are 683 possible classes, this model performed significantly better than random guess which would have an expected accuracy of 0.0015. 
 
-As shown by the higher concentration of blue lines to the left, the representation of the class in the dataset was relevant to whether a class would be predicted at all.  However, it was not dispositive.  Indeed, the model correctly predicted CPC subclasses with as low as 6 representative samples and had 0\% accuracy for CPC subclasses with as high as 14,313 samples.  In general, data did not appear to be indicative of predictive accuracy beyond there being 500 representative samples. 
+An interesting trend common to both models is the unexpected similarity between the five class and ten class prediction accuracy (0.76/0.77 for Naive Bayes, and 0.70/0.70 for TF-IDF).  The similarity in accuracy suggests that there were very few instances where the models could identify the class correctly in the top ten, but not in the top five. In addition, it seems as though the models were better at predicting some classes than others.   For example, in the TF-IDF classification model, one interesting thing to note is that at most 400 unique classes, or about 60\% of classes were predicted using single class prediction. The left image of \autoref{fig:exp3_result} is a plot showing, for the TF-IDF model, the accuracy of the model with respect to some of the most frequent CPC classes.  The blue vertical lines represent the model’s accuracy for each class, while the orange line represents the number of times that each class was represented in the training set. As shown by the higher concentration of blue lines to the left, the representation of the class in the dataset was relevant to whether a class would be predicted at all.  However, it was not dispositive.  Indeed, the model correctly predicted CPC subclasses with as low as 6 representative samples and had 0\% accuracy for CPC subclasses with as high as 14,313 samples.  In general, data did not appear to be indicative of predictive accuracy beyond there being 500 representative samples. 
 
 Overall, it appears that the queried text from patent abstracts can be used to identify patents as being part of a particular class, with an accuracy that is somewhere around 30-40\%, depending on the algorithm.  Compared to existing models of patent classification, which show accuracies between 52\% and 67\%\cite{article:kamateri}, the presented models are less accurate.  It is important to note, however, that unlike the prediction methods described in the literature, the presented models are based on the patent abstracts alone, and are presented primarily to provide a verifiable metric of usefulness of the patent abstract in determining the content of the patent, rather than creating a robust method of patent classification.  Still, it is clear that with some additional refinements – such as the ensemble methods discussed in Kamateri, et al. – there may be ways to improve the classification methodologies and produce more accurate predictions.
 
@@ -322,11 +307,10 @@ Overall, this project has demonstrated the feasibility and effectiveness of empl
 
 While we are satisfied with the predictive accuracy with our classification models, we think there is room for improvement. One of the issues we encountered was that the vast majority of patents have multiple classes.  Because of this, words are counted in multiple CPC subclasses causing some cross pollination of words in classes that they may not really apply to. We were able to attain strong results for some classes. I think we could achieve much stronger results by more carefully curating training data. 
 
-
-
+\section{Repository}
+Our project files can be found at: https://github.ncsu.edu/rmmott/-engr-ALDA-Fall2023-P4
 
 \bibliography{p4} 
-
 
 
 
