@@ -49,6 +49,9 @@
 
 
 
+
+
+
 \title{Patent Quest: An Unsupervised Learning Algorithm that Returns the Most Common Words Found in Recently Filed Patents and Abstracts\newline (Group P4)}
 
 
@@ -94,7 +97,7 @@ The United States Patent and Trademark Office (“USPTO”) maintains the record
 \section{Background}
 From the Singer sewing machine (see U.S. Patent No. 8,294) to the Edison lightbulb (see U.S. Patent No. 223,898) to the Wright Brothers’ aircraft (see U.S. Patent No. 821,393) , much of American history can be told through the stories of invention and innovation that propelled it forward into new eras. A window into these stories exists through the U.S. patent system, which publishes these inventions, and the best way of making and using them, in documents called “patents.”
 
-The United States Patent and Trademark Office (“USPTO”) is in charge of issuing these patents and making them accessible to the public, which it has done perpetually since its inception in 1790\cite{website:usptoms}. The USPTO also assigns to each patent one or more technological classes, called “CPC Classes,” in order to categorize inventions into their scientific field. As of 2023, there are now nearly 13 million patents that have been published through the U.S. patent system, which remain freely accessible by all\cite{website:usptoacc}.
+The United States Patent and Trademark Office (“USPTO”) is in charge of issuing these patents and making them accessible to the public, which it has done perpetually since its inception in 1790\cite{website:usptoms}. The USPTO also assigns to each patent one or more technological classes, called “CPC Subclasses,” in order to categorize inventions into their scientific field. As of 2023, there are now nearly 13 million patents that have been published through the U.S. patent system, which remain freely accessible by all\cite{website:usptoacc}.
 
 The patents themselves are written by the inventor (and usually, a patent attorney), and include, among other things, a title, an abstract, a brief description of the invention and a set of patent claims\cite{website:patent1}.   Patents are notoriously complex, and the exact nature of what they describe and claim is often subject to intense disagreement, leading to multi-year legal battles that can cost millions of dollars in legal fees\cite{website:aipla}.
 
@@ -110,7 +113,7 @@ However, there continues to exist a need for simpler models, which can quickly a
 \label{method}
 
 \subsection{Create a Data Mining Methodology Using the Words in Patent Abstracts}
-This project seeks to use machine learning methods for the purpose of gleaning information about the subject matter of patents by analyzing the text found in a patents’ abstracts.  
+This project seeks to use machine learning methods for the purpose of gleaning information about the subject matter of patents by analyzing the text found in patents’ abstracts.  
 
 Using only the words in the patent abstracts, we will enable allow a user to perform a basic search – by competitor, inventor, geographic region or technological class – within a specified date range, and then produce a word cloud visualization, showing the most common keywords used in the patents that are included in the search.  
 
@@ -201,7 +204,7 @@ With the above equations, corpus includes all patents within the training data s
 \end{flalign}
 
 \section{Plan and Experiment}
-Dataset: All Patent Abstracts from Patents Issued from 2013-2023
+\ul{Dataset: All Patent Abstracts from Patents Issued from 2013-2023}
 
 Although full text patents are available directly as bulk downloads from the United States Patent and Trademark Office, the sheer volume of the data – which includes every word written in every patent issued since 2002 – made it cumbersome to use. Each day, around 1,000 U.S. patents are issued, almost a patent a minute, with each patent typically having dozens of pages of dual-column text.  Since our project is focused primarily on a small subset of this text (the abstract and the title), collecting the data in bulk form would have been unwieldy and enormously inefficient.
 
@@ -283,11 +286,11 @@ The retrieved patents each appear to originate from competitors of the test comp
 Pictured below are the results of the accuracy test over the course of 1000 trials for the Naive Bayesian algorithm.  For each trial, a random patent was selected from a uniform distribution of all patent IDs issued in 2023, which comprised the testing set.
 
 \begin{figure}[ht]
-  \subcaptionbox*{Accuracy Convergence, 1000 Predictions}[.45\linewidth]{%
+  \subcaptionbox*{Accuracy per CPC, and Most Frequent CPCs}[.45\linewidth]{%
     \includegraphics[width=\linewidth]{exp3_result}%
   }%
   \hfill
-  \subcaptionbox*{Accuracy per CPC, and Most Frequent CPCs}[.45\linewidth]{%
+  \subcaptionbox*{Accuracy Convergence, 1000 Predictions}[.45\linewidth]{%
     \includegraphics[width=\linewidth]{exp3_result2}%
   }
   \caption{Analytics from TF\_IDF (L) and Naive Bayes (R)}
@@ -304,7 +307,7 @@ As shown by the higher concentration of blue lines to the left, the representati
 \subsection{Conclusions}
 Overall, this project has demonstrated the feasibility and effectiveness of employing data mining techniques to extract valuable insights from millions of patent abstracts.  By devising a methodology to systematically create WordClouds of patents or patent portfolio, we enabled a means to quickly compare large volumes of patent data.  The usefulness of this data was confirmed by its ability to predict, using Naive Bayes and TF-IDF methods, a patent’s given class with 30-40\% accuracy. Most of the challenges involved in this process revolved around the quantity of data.  Even limiting data to the patent abstracts from the past ten years, the sheer size of the patent dataset (3 million patents) tested the limit of physical memory for our computers, which required us to adopt some memory management and batch processing approaches that were novel to us.  
 
-While we are satisfied with the predictive accuracy with our classification models, we think there is room for improvement. One of the issues we encountered was that the vast majority of patents have multiple classes.  Because of this, words are counted in multiple CPC subclasses causing some cross pollination of words in classes that they may not really apply to. We were able to attain strong results for some classes. I think we could achieve much stronger results by more carefully curating training data. 
+While we are satisfied with the predictive accuracy with our classification models, we think there is room for improvement. One of the issues we encountered was that the vast majority of patents have multiple classes. Because of this, words are counted in multiple CPC subclasses causing some cross pollination of words in classes that they may not really apply to. Carefully pruning the training dataset to include only those patents which fall under a single class may result in higher testing accuracy, a subject which may be explored in future work.
 
 \section{Repository}
 Our project files can be found at: https://github.ncsu.edu/rmmott/-engr-ALDA-Fall2023-P4
