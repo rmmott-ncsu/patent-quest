@@ -1,6 +1,6 @@
 [
     {
-        // Saucer Section (Circle Approximation)
+        
         "material": {
             "ambient": [0.2, 0.2, 0.2],
             "diffuse": [0.8, 0.8, 0.8], 
@@ -8,8 +8,8 @@
             "n": 10 
         },
         "vertices": [
-            [0.5, 0.5, -0.5],   // Center
-            [0.5, 0.8, -0.5],   // Top
+            [0.5, 0.5, -0.5],   
+            [0.5, 0.8, -0.5],   
             [0.7, 0.7, -0.5],
             [0.8, 0.5, -0.5],
             [0.7, 0.3, -0.5],
@@ -30,7 +30,7 @@
         ]
     },
     {
-        // Engineering Hull (Box) - Extended and refined
+
         "material": {
             "ambient": [0.1, 0.1, 0.1],
             "diffuse": [0.6, 0.6, 0.6], 
@@ -38,26 +38,26 @@
             "n": 5
         },
         "vertices": [
-            [0.35, 0.45, -0.6],   // Front-top-left
-            [0.65, 0.45, -0.6],   // Front-top-right
-            [0.35, 0.25, -0.6],   // Front-bottom-left
-            [0.65, 0.25, -0.6],   // Front-bottom-right
-            [0.3, 0.4, -1.2],     // Back-top-left (narrower)
-            [0.7, 0.4, -1.2],     // Back-top-right (narrower)
-            [0.3, 0.2, -1.2],     // Back-bottom-left (narrower)
-            [0.7, 0.2, -1.2]      // Back-bottom-right (narrower)
+            [0.35, 0.45, -0.6],   
+            [0.65, 0.45, -0.6],   
+            [0.35, 0.25, -0.6],   
+            [0.65, 0.25, -0.6],   
+            [0.3, 0.4, -1.2],     
+            [0.7, 0.4, -1.2],     
+            [0.3, 0.2, -1.2],     
+            [0.7, 0.2, -1.2]     
         ],
         "triangles": [
-            [0, 1, 2], [1, 3, 2], // Front face
-            [4, 6, 5], [5, 6, 7], // Back face
-            [0, 4, 1], [1, 4, 5], // Top face
-            [2, 3, 6], [3, 7, 6], // Bottom face
-            [0, 2, 4], [2, 6, 4], // Left face
-            [1, 5, 3], [3, 5, 7]  // Right face
+            [0, 1, 2], [1, 3, 2], 
+            [4, 6, 5], [5, 6, 7], 
+            [0, 4, 1], [1, 4, 5], 
+            [2, 3, 6], [3, 7, 6], 
+            [0, 2, 4], [2, 6, 4], 
+            [1, 5, 3], [3, 5, 7]  
         ]
     },
     {
-        // Nacelles with Pylons (Simplified)
+
         "material": {
             "ambient": [0.1, 0.1, 0.1],
             "diffuse": [0.4, 0.4, 0.8], 
@@ -65,33 +65,32 @@
             "n": 8
         },
         "vertices": [
-            // Left Nacelle
-            [0.2, 0.55, -1.2],   // Front center
-            [0.2, 0.65, -1.2],   // Top
-            [0.2, 0.45, -1.2],   // Bottom
-            [0.2, 0.55, -1.7],   // Back center
-            [0.2, 0.65, -1.7],   // Back top
-            [0.2, 0.45, -1.7],   // Back bottom
-            [0.3, 0.5, -1.2],    // Pylon connection to hull (adjust as needed)
 
-            // Right Nacelle (similar structure)
+            [0.2, 0.55, -1.2],  
+            [0.2, 0.65, -1.2],  
+            [0.2, 0.45, -1.2],   
+            [0.2, 0.55, -1.7],  
+            [0.2, 0.65, -1.7],   
+            [0.2, 0.45, -1.7],   
+            [0.3, 0.5, -1.2],    
+
             [0.8, 0.55, -1.2],
             [0.8, 0.65, -1.2],
             [0.8, 0.45, -1.2],
             [0.8, 0.55, -1.7],
             [0.8, 0.65, -1.7],
             [0.8, 0.45, -1.7],
-            [0.7, 0.5, -1.2]     // Pylon connection to hull (adjust as needed)
+            [0.7, 0.5, -1.2]    
         ],
         "triangles": [
-            // Left Nacelle
-            [0, 1, 2], [3, 5, 4], // Nacelle faces
-            [0, 2, 6], [4, 5, 6], // Pylon sides (connect to hull)
 
-            // Right Nacelle (similar structure)
+            [0, 1, 2], [3, 5, 4], 
+            [0, 2, 6], [4, 5, 6], 
+
+            
             [7, 8, 9], [10, 12, 11], 
             [7, 9, 13], [10, 11, 13] 
         ]
     },
-    // Add more objects/details here as needed (e.g., bridge, deflector dish, etc.)
+   
 ]
