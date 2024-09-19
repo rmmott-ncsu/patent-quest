@@ -1,9 +1,9 @@
 [
     {
         "material": {
-            "ambient": [0.3, 0.2, 0.2],
-            "diffuse": [0.9, 0.1, 0.4], 
-            "specular": [0.6, 0.6, 0.6],
+            "ambient": [0.3, 0, 0],
+            "diffuse": [0.9, 0, 0.5], 
+            "specular": [0.8, 0, 0.2],
             "n": 10
         },
         "vertices": [
@@ -27,9 +27,9 @@
     },
     {
         "material": {
-            "ambient": [0.3, 0.2, 0.2],
-            "diffuse": [0.9, 0.1, 0.4], 
-            "specular": [0.6, 0.6, 0.6],
+            "ambient": [0.3, 0, 0],
+            "diffuse": [0.9, 0, 0.5], 
+            "specular": [0.8, 0, 0.2],
             "n": 20
         },
         "vertices": [
@@ -56,9 +56,9 @@
     },
     {
         "material": {
-            "ambient": [0.3, 0.2, 0.2],
-            "diffuse": [0.9, 0.1, 0.4], 
-            "specular": [0.6, 0.6, 0.6],
+            "ambient": [0.3, 0, 0],
+            "diffuse": [0.9, 0, 0.5], 
+            "specular": [0.8, 0, 0.2],
             "n": 8
         },
         "vertices": [
@@ -82,9 +82,9 @@
     },
     {
         "material": {
-            "ambient": [0.3, 0.2, 0.2],
-            "diffuse": [0.9, 0.1, 0.4], 
-            "specular": [0.6, 0.6, 0.6],
+            "ambient": [0.3, 0, 0],
+            "diffuse": [0.9, 0, 0.5], 
+            "specular": [0.8, 0, 0.2],
             "n": 8
         },
         "vertices": [
