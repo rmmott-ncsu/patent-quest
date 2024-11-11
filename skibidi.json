@@ -2,22 +2,22 @@
     {
         "material": {
             "ambient": [
-                0.1,
-                0.1,
-                0.1
+                0.5,
+                0.5,
+                0.5
             ],
             "diffuse": [
-                0.6,
-                0.6,
-                0.4
+                0.5,
+                0.5,
+                0.5
             ],
             "specular": [
-                0.3,
-                0.3,
-                0.3
+                0.5,
+                0.5,
+                0.5
             ],
             "n": 17,
-            "alpha": 1,
+            "alpha": 0.9,
             "texture": "skibidi_bottom.png"
         },
         "vertices": [
@@ -98,22 +98,22 @@
     {
         "material": {
             "ambient": [
-                0.1,
-                0.1,
-                0.1
+                0.5,
+                0.5,
+                0.5
             ],
             "diffuse": [
-                0.6,
-                0.6,
-                0.4
+                0.5,
+                0.5,
+                0.5
             ],
             "specular": [
-                0.3,
-                0.3,
-                0.3
+                0.5,
+                0.5,
+                0.5
             ],
             "n": 17,
-            "alpha": 1,
+            "alpha": 0.9,
             "texture": "skibidi_head.png"
         },
         "vertices": [
@@ -194,22 +194,22 @@
     {
         "material": {
             "ambient": [
-                0.1,
-                0.1,
-                0.1
+                0.5,
+                0.5,
+                0.5
             ],
             "diffuse": [
-                0.6,
-                0.6,
-                0.4
+                0.5,
+                0.5,
+                0.5
             ],
             "specular": [
-                0.3,
-                0.3,
-                0.3
+                0.5,
+                0.5,
+                0.5
             ],
             "n": 17,
-            "alpha": 1,
+            "alpha": 0.9,
             "texture": "skibidi_top.png"
         },
         "vertices": [
