@@ -17,7 +17,7 @@
                 0.3
             ],
             "n": 17,
-            "alpha": 0.3,
+            "alpha": 1,
             "texture": "skibidi_bottom.png"
         },
         "vertices": [
@@ -113,7 +113,7 @@
                 0.3
             ],
             "n": 17,
-            "alpha": 0.3,
+            "alpha": 1,
             "texture": "skibidi_head.png"
         },
         "vertices": [
@@ -209,7 +209,7 @@
                 0.3
             ],
             "n": 17,
-            "alpha": 0.3,
+            "alpha": 1,
             "texture": "skibidi_top.png"
         },
         "vertices": [
